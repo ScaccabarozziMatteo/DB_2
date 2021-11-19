@@ -4,12 +4,11 @@ import com.example.db_2.POJO.User;
 import com.example.db_2.Services.MessageException;
 import com.example.db_2.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.GeneratedValue;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Map;
 
 @RestController
 @RequestMapping(value = "/user")
@@ -22,7 +21,10 @@ public class UserController {
     }
 
     @PostMapping(value = "/login")
-    public User login(@RequestBody String email, @RequestBody String password, HttpServletResponse response) throws IOException {
+    public User login(@RequestBody Map<String, String> parameters, HttpServletResponse response) throws IOException {
+        String email = parameters.get("email");
+        String password = parameters.get("password");
+
         User u = new User();
         try {
              u = US.checkCredentials(email, password);
@@ -34,7 +36,7 @@ public class UserController {
     }
 
     @PostMapping(value ="/registration")
-    public int registration( HttpServletResponse response, @RequestParam String username, @RequestParam String email,  @RequestParam String password) throws IOException {
+    public int registration(HttpServletResponse response, @RequestParam String username, @RequestParam String email,  @RequestParam String password) throws IOException {
         int i=-1;
         try {
             i=US.createUser(email, username, password);

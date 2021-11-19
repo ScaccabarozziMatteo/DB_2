@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Map;
 
 @RestController
 @RequestMapping(value = "/employee")
@@ -30,7 +31,10 @@ public class EmployeeController {
     }*/
 
     @PostMapping(value = "/login")
-    public Employee login(@RequestBody String email, @RequestBody String password, HttpServletResponse response) throws IOException {
+    public Employee login(@RequestBody Map<String, String> parameters, HttpServletResponse response) throws IOException {
+        String email = parameters.get("email");
+        String password = parameters.get("password");
+
         Employee e = new Employee();
         try {
             e = ES.checkCredentials(email, password);
@@ -42,7 +46,7 @@ public class EmployeeController {
     }
 
     @PostMapping(value ="/registration")
-    public int registration( HttpServletResponse response,  @RequestParam String email,  @RequestParam String password) throws IOException {
+    public int registration(HttpServletResponse response,  @RequestParam String email,  @RequestParam String password) throws IOException {
         int i=-1;
         try {
             i=ES.createEmployee(email, password);
