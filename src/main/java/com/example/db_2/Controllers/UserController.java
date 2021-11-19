@@ -22,7 +22,7 @@ public class UserController {
     }
 
     @PostMapping(value = "/login")
-    public User login(@RequestBody String email, @RequestBody String password, HttpServletResponse response) throws IOException {
+    public User login(@RequestParam String email, @RequestParam String password, HttpServletResponse response) throws IOException {
         User u = new User();
         try {
              u = US.checkCredentials(email, password);
