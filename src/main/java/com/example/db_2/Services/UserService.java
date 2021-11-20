@@ -34,7 +34,7 @@ public class UserService {
             throw new MessageException("Could not verify credentials");
         }
         if (userList.isEmpty())
-            return null;
+            throw new MessageException("Invalid credentials!");
         else if (userList.size() == 1)
             return userList.get(0);
         throw new NonUniqueResultException("Multiple user registered with same credentials!");
