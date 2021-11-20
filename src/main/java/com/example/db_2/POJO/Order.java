@@ -1,6 +1,8 @@
 package com.example.db_2.POJO;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -10,7 +12,7 @@ import java.util.List;
 @Table(name="ORDERS")
 public class Order {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_order")
     private int id;
 
@@ -22,11 +24,12 @@ public class Order {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
+    @JsonBackReference
     private User user;
 
     @ManyToOne
     @JoinColumn(name = "package")
-    private Package Package;
+    private Package aPackage;
 
     @ManyToMany
     @JoinTable(name = "order_opt_products",
@@ -48,6 +51,14 @@ public class Order {
 
     public LocalDateTime getTimestamp() {
         return timestamp;
+    }
+
+    public Package getaPackage() {
+        return aPackage;
+    }
+
+    public void setaPackage(Package aPackage) {
+        this.aPackage = aPackage;
     }
 
     public void setTimestamp(LocalDateTime timestamp) {
@@ -92,14 +103,6 @@ public class Order {
 
     public void setUser(User user) {
         this.user = user;
-    }
-
-    public com.example.db_2.POJO.Package getPackage() {
-        return Package;
-    }
-
-    public void setPackage(com.example.db_2.POJO.Package aPackage) {
-        Package = aPackage;
     }
 
     public List<OptionalProduct> getOptionalProducts() {

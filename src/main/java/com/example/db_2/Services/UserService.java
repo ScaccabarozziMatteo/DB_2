@@ -1,5 +1,6 @@
 package com.example.db_2.Services;
 
+import com.example.db_2.POJO.Order;
 import com.example.db_2.POJO.User;
 import org.springframework.stereotype.Service;
 
@@ -33,7 +34,7 @@ public class UserService {
         } catch (PersistenceException e) {
             throw new MessageException("Could not verify credentials");
         }
-        if (userList.isEmpty())
+        if (userList.isEmpty() || userList == null)
             throw new MessageException("Invalid credentials!");
         else if (userList.size() == 1)
             return userList.get(0);
@@ -50,13 +51,30 @@ public class UserService {
             throw new MessageException("Can't register empty strings, insert valid credentials");
         }
 
-        User u= new User(email,username,password);
-        entityManager.persist(u);
-      /*  u.setEmail(email);
+        User u= new User();
+        u.setEmail(email);
         u.setUsername(username);
         u.setPassword(password);
-        entityManager.flush();*/
+        entityManager.persist(u);
+        entityManager.flush();
        return u.getId();
     }
+
+    public List<Order> getUserOrders (int user_id) throws MessageException {
+        User user =new User();
+        user = entityManager.find(User.class,user_id);
+        if (user == null)
+        {
+            throw new MessageException("User "+ user_id + " not found!");
+        }
+
+        Query query = entityManager.createQuery("select o from Order o, User u  where o.user=u and u.id = ?1 ");
+
+        query.setParameter(1,user_id);
+
+        return query.getResultList();
+
+    }
+
 
 }

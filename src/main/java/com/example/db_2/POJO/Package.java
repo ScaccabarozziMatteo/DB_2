@@ -1,6 +1,7 @@
 package com.example.db_2.POJO;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "packages")
@@ -19,6 +20,36 @@ public class Package {
     @ManyToOne
     @JoinColumn(name = "employee")
     private Employee employee;
+
+    @ManyToMany
+    @JoinTable(name = "package_service",
+            joinColumns =@JoinColumn(name = "package"),
+            inverseJoinColumns = @JoinColumn(name = "service")
+    )
+    private List<Service> services;
+
+    @ManyToMany
+    @JoinTable(name = "package_opt_prod",
+            joinColumns = @JoinColumn(name = "package"),
+            inverseJoinColumns = @JoinColumn(name = "optional_product")
+    )
+    private List<OptionalProduct> optionalProducts;
+
+    public List<Service> getServices() {
+        return services;
+    }
+
+    public void setServices(List<Service> services) {
+        this.services = services;
+    }
+
+    public List<OptionalProduct> getOptionalProducts() {
+        return optionalProducts;
+    }
+
+    public void setOptionalProducts(List<OptionalProduct> optionalProducts) {
+        this.optionalProducts = optionalProducts;
+    }
 
     public Package() {
     }

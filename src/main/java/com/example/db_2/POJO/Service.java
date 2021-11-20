@@ -9,25 +9,25 @@ public class Service {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id_service")
-    private int id;
+    private Integer id;
 
     //enum('fixed phone','mobile phone','fixed internet','mobile internet')
     private String type;
-    private int minutes;
-    private int sms;
-    private int internet;
-    private float minutes_fee;
-    private float sms_fee;
-    private float internet_fee;
+    private Integer minutes;
+    private Integer sms;
+    private Integer internet;
+    private Float minutes_fee;
+    private Float sms_fee;
+    private Float internet_fee;
 
     public Service() {
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -39,51 +39,51 @@ public class Service {
         this.type = type;
     }
 
-    public int getMinutes() {
+    public Integer getMinutes() {
         return minutes;
     }
 
-    public void setMinutes(int minutes) {
+    public void setMinutes(Integer minutes) {
         this.minutes = minutes;
     }
 
-    public int getSms() {
+    public Integer getSms() {
         return sms;
     }
 
-    public void setSms(int sms) {
+    public void setSms(Integer sms) {
         this.sms = sms;
     }
 
-    public int getInternet() {
+    public Integer getInternet() {
         return internet;
     }
 
-    public void setInternet(int internet) {
+    public void setInternet(Integer internet) {
         this.internet = internet;
     }
 
-    public float getMinutes_fee() {
+    public Float getMinutes_fee() {
         return minutes_fee;
     }
 
-    public void setMinutes_fee(float minutes_fee) {
+    public void setMinutes_fee(Float minutes_fee) {
         this.minutes_fee = minutes_fee;
     }
 
-    public float getSms_fee() {
+    public Float getSms_fee() {
         return sms_fee;
     }
 
-    public void setSms_fee(float sms_fee) {
+    public void setSms_fee(Float sms_fee) {
         this.sms_fee = sms_fee;
     }
 
-    public float getInternet_fee() {
+    public Float getInternet_fee() {
         return internet_fee;
     }
 
-    public void setInternet_fee(float internet_fee) {
+    public void setInternet_fee(Float internet_fee) {
         this.internet_fee = internet_fee;
     }
 }
