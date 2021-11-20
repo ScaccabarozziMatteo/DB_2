@@ -30,6 +30,8 @@ public class UserController {
         User u = new User();
         try {
              u = US.checkCredentials(email, password);
+             if(u == null)
+                 response.sendError(HttpServletResponse.SC_CONFLICT, "Authentication Failed: " + email + " not registered!");
         } catch (MessageException e) {
             //e.printStackTrace();
             response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Authentication Failed: " + e.getMessage());

@@ -38,6 +38,8 @@ public class EmployeeController {
         Employee e = new Employee();
         try {
             e = ES.checkCredentials(email, password);
+            if(e == null)
+                response.sendError(HttpServletResponse.SC_CONFLICT, "Authentication Failed: " + email + " not registered!");
         } catch (MessageException m) {
             //e.printStackTrace();
             response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Authentication Failed: " + m.getMessage());
