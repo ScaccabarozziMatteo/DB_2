@@ -38,7 +38,7 @@ public class EmployeeService {
         } catch (PersistenceException e) {
             throw new MessageException("Could not verify credentials");
         }
-        if (employeeList.isEmpty())
+        if (employeeList.isEmpty() || employeeList == null)
             return null;
         else if (employeeList.size() == 1)
             return employeeList.get(0);
