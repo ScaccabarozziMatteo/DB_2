@@ -50,8 +50,8 @@ public class UserController {
         return i;
     }
 
-    @GetMapping(value = "/getorders/{user_id}")
-    public List<Order> getAllforUser (@PathVariable int user_id, HttpServletResponse response) throws IOException {
+    @GetMapping(value = "/getorders")
+    public List<Order> getAllforUser (@RequestParam int user_id, HttpServletResponse response) throws IOException {
         List<Order> orders = new ArrayList<>();
         try {
             orders = US.getUserOrders(user_id);

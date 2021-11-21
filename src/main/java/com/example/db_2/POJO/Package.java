@@ -8,7 +8,7 @@ import java.util.List;
 public class Package {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_package")
     private int id;
 

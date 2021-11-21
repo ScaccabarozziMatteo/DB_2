@@ -51,7 +51,7 @@ public class EmployeeController {
     public int registration(HttpServletResponse response,  @RequestBody Employee employee) throws IOException {
         int i=-1;
         try {
-            i=ES.createEmployee(employee.getEmail(), employee.getPassword()));
+            i=ES.createEmployee(employee.getEmail(), employee.getPassword());
             return i;
         } catch (MessageException e) {
             //e.printStackTrace();

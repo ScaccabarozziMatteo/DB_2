@@ -30,8 +30,8 @@ public class OrderController {
     }
 
 
-    @GetMapping(value = "/get/{user_id}")
-    public List<Order> getAllforUser (@PathVariable int user_id, HttpServletResponse response) throws IOException {
+    @GetMapping(value = "/get")
+    public List<Order> getAllforUser (@RequestParam int user_id, HttpServletResponse response) throws IOException {
         List<Order> orders = new ArrayList<>();
         try {
             orders = OS.getUserOrders(user_id);
@@ -75,13 +75,13 @@ public class OrderController {
     }
 
     @PostMapping(value = "/create")
-    public int createOrder(@RequestBody Order order, @RequestBody List<Integer> list, HttpServletResponse response) throws IOException {
+    public int createOrder(@RequestBody Order order, HttpServletResponse response) throws IOException {
 
-        /*
+
         List<Integer> list = new ArrayList<>();
         for(OptionalProduct opp : order.getOptionalProducts()){
             list.add(opp.getId());
-        }*/
+        }
 
        int orderID = 0;
         try {
