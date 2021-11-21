@@ -39,7 +39,7 @@ public class EmployeeService {
             throw new MessageException("Could not verify credentials");
         }
         if (employeeList.isEmpty() || employeeList == null)
-            return null;
+            throw new MessageException("Invalid credentials");
         else if (employeeList.size() == 1)
             return employeeList.get(0);
         throw new NonUniqueResultException("Multiple user registered with same credentials!");
