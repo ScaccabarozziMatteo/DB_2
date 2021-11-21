@@ -1,6 +1,8 @@
 package com.example.db_2.Controllers;
 
+import com.example.db_2.POJO.OptionalProduct;
 import com.example.db_2.POJO.Package;
+import com.example.db_2.POJO.Service;
 import com.example.db_2.Services.MessageException;
 import com.example.db_2.Services.PackageService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -28,10 +31,20 @@ public class PackageController {
     }
 
     @PostMapping(value = "/create")
-    public int createPackage(HttpServletResponse response, @RequestParam String name, @RequestParam Float fee12, @RequestParam Float fee24, @RequestParam Float fee36, @RequestParam int employee_id, @RequestParam List<Integer> services_id, @RequestParam List<Integer> prods_id) throws IOException {
+    public int createPackage(HttpServletResponse response,@RequestBody Package aPackage) throws IOException {
         Integer i=null;
+        List<Integer> services_id = new ArrayList<>();
+        List<Integer> prods_id = new ArrayList<>();
+
+        for(Service aService : aPackage.getServices()){
+            services_id.add(aService.getId()) ;
+        }
+        for(OptionalProduct opp : aPackage.getOptionalProducts()){
+            prods_id.add(opp.getId());
+        }
+
         try {
-            i= PS.createPackage(name, fee12, fee24, fee36, employee_id, services_id, prods_id);
+            i= PS.createPackage(aPackage.getName(), aPackage.getFee12(), aPackage.getFee24(), aPackage.getFee36(),aPackage.getEmployee().getId(), services_id, prods_id);
         } catch (MessageException e) {
             //e.printStackTrace();
             response.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED,e.getMessage());

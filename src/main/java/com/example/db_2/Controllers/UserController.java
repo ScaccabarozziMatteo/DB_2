@@ -25,10 +25,10 @@ public class UserController {
     }
 
     @PostMapping(value = "/login")
-    public User login(@RequestParam String email, @RequestParam String password, HttpServletResponse response) throws IOException {
+    public User login(@RequestBody User user, HttpServletResponse response) throws IOException {
         User u = new User();
         try {
-             u = US.checkCredentials(email, password);
+             u = US.checkCredentials(user.getEmail(),user.getPassword());
         } catch (MessageException e) {
             //e.printStackTrace();
             response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Authentication Failed: " + e.getMessage());
@@ -37,10 +37,10 @@ public class UserController {
     }
 
     @PostMapping(value ="/registration")
-    public int registration( HttpServletResponse response, @RequestParam String username, @RequestParam String email,  @RequestParam String password) throws IOException {
+    public int registration( HttpServletResponse response,@RequestBody User user) throws IOException {
         int i=-1;
         try {
-            i=US.createUser(email, username, password);
+            i=US.createUser(user.getEmail(), user.getUsername(), user.getPassword());
             return i;
         } catch (MessageException e) {
             //e.printStackTrace();

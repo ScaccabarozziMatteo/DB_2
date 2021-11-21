@@ -48,10 +48,10 @@ public class EmployeeController {
     }
 
     @PostMapping(value ="/registration")
-    public int registration(HttpServletResponse response,  @RequestParam String email,  @RequestParam String password) throws IOException {
+    public int registration(HttpServletResponse response,  @RequestBody Employee employee) throws IOException {
         int i=-1;
         try {
-            i=ES.createEmployee(email, password);
+            i=ES.createEmployee(employee.getEmail(), employee.getPassword()));
             return i;
         } catch (MessageException e) {
             //e.printStackTrace();

@@ -1,5 +1,6 @@
 package com.example.db_2.Controllers;
 
+import com.example.db_2.POJO.OptionalProduct;
 import com.example.db_2.POJO.Order;
 import com.example.db_2.Services.MessageException;
 import com.example.db_2.Services.OrderService;
@@ -74,12 +75,17 @@ public class OrderController {
     }
 
     @PostMapping(value = "/create")
-    public int createOrder(@RequestParam("startSub")
-                          @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startSub, @RequestParam int validity, @RequestParam int  user_id, @RequestParam int package_id, @RequestParam("products") List<Integer> list, HttpServletResponse response) throws IOException {
+    public int createOrder(@RequestBody Order order, @RequestBody List<Integer> list, HttpServletResponse response) throws IOException {
+
+        /*
+        List<Integer> list = new ArrayList<>();
+        for(OptionalProduct opp : order.getOptionalProducts()){
+            list.add(opp.getId());
+        }*/
 
        int orderID = 0;
         try {
-            orderID=  OS.createOrder(startSub, validity, user_id, package_id,list );
+            orderID=  OS.createOrder(order.getStart_subs(),order.getValidity(),order.getUser().getId(), order.getaPackage().getId(),list );
         } catch (MessageException e) {
             //e.printStackTrace();
             response.sendError(HttpServletResponse.SC_FORBIDDEN, "Order creation failed: " + e.getMessage());
