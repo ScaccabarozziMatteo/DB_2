@@ -1,5 +1,7 @@
 package com.example.db_2.POJO;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -20,6 +22,7 @@ public class Employee {
     private String password;
 
     @OneToMany(mappedBy = "employee")
+    @JsonBackReference
     private List<Package> packageList;
 
     public Employee(){}

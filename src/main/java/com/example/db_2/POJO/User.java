@@ -40,7 +40,6 @@ public class User {
     private List<Service> service_queues;
 
     @OneToMany(mappedBy = "user")
-    @JsonManagedReference
     private List<Order> orders;
 
     public User() {
