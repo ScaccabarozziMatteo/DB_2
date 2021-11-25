@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping(value = "/user")
@@ -27,6 +28,7 @@ public class UserController {
     @PostMapping(value = "/login")
     public User login(@RequestBody User user, HttpServletResponse response) throws IOException {
         User u = new User();
+
         try {
              u = US.checkCredentials(user.getEmail(),user.getPassword());
         } catch (MessageException e) {
