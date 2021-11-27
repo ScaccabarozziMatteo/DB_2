@@ -28,9 +28,10 @@ public class ServiceService {
         query.setParameter(5,service.getMinutes_fee());
         query.setParameter(6,service.getSms());
         query.setParameter(7,service.getSms_fee());
-
+        System.out.println(query);
         s= query.getResultList();
-        if(s!=null)
+        System.out.println(query.getResultList());
+        if(!s.isEmpty())
             throw new MessageException("service already exists!!");
 
         entityManager.persist(service);

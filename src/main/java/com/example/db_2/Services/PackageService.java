@@ -24,6 +24,27 @@ public class PackageService {
         return query.getResultList();
     }
 
+
+
+    public int createPackage2(Package aPackage,List<Integer> prods_id) throws MessageException {
+        OptionalProduct op =new OptionalProduct();
+
+        if(prods_id!=null) {
+            for (int prod_id : prods_id) {
+                op = entityManager.find(OptionalProduct.class, prod_id);
+                if (op == null) {
+                    throw new MessageException("Optional product " + prod_id + " is not avaiable!");
+                }
+            }
+        }
+        for(com.example.db_2.POJO.Service ss : aPackage.getServices()){
+            entityManager.persist(ss);
+        }
+        entityManager.persist(aPackage);
+        entityManager.flush();
+        return aPackage.getId();
+    }
+
     public int createPackage(String name, Float fee12, Float fee24, Float fee36, int employee_id, List<Integer> services_id,List<Integer> prods_id) throws MessageException {
 
         List<OptionalProduct> optionalProducts = new ArrayList<>();

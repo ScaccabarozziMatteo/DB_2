@@ -30,6 +30,29 @@ public class PackageController {
         return PS.findALL();
     }
 
+    @PostMapping(value = "/create2")
+    public int createPackage2(HttpServletResponse response,@RequestBody Package aPackage) throws IOException {
+        Integer i=null;
+        List<Integer> prods_id = new ArrayList<>();
+
+
+        if(aPackage.getOptionalProducts()!=null) {
+            for (OptionalProduct opp : aPackage.getOptionalProducts()) {
+                prods_id.add(opp.getId());
+            }
+        }
+
+        try {
+            i= PS.createPackage2(aPackage, prods_id);
+        } catch (MessageException e) {
+            //e.printStackTrace();
+            response.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED,e.getMessage());
+        }
+
+        return i;
+    }
+
+
     @PostMapping(value = "/create")
     public int createPackage(HttpServletResponse response,@RequestBody Package aPackage) throws IOException {
         Integer i=null;

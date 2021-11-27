@@ -32,6 +32,10 @@ public class Employee {
         this.password=password;
     }
 
+    public Employee(int id) {
+        this.id = id;
+    }
+
     public String getEmail() {
         return email;
     }
