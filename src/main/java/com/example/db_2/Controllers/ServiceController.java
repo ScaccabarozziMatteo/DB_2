@@ -1,10 +1,13 @@
 package com.example.db_2.Controllers;
 
 import com.example.db_2.POJO.Service;
+import com.example.db_2.Services.MessageException;
 import com.example.db_2.Services.ServiceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -19,8 +22,15 @@ public class ServiceController {
     }
 
     @PostMapping(value = "/create")
-    public int createNew(@RequestBody Service service){
-       return serviceService.createNew(service);
+    public int createNew(@RequestBody Service service, HttpServletResponse response) throws IOException {
+        int r=-1;
+        try {
+            r= serviceService.createNew(service);
+        } catch (MessageException e) {
+           // e.printStackTrace();
+            response.sendError(HttpServletResponse.SC_CONFLICT,e.getMessage());
+        }
+        return r;
     }
 
     @GetMapping(value="/getmobilephone")
