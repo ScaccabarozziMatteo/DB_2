@@ -117,10 +117,14 @@ public class OrderController {
 
 
         List<Integer> list = new ArrayList<>();
-        if(order.getOptionalProducts()!=null){
+       // if(order.getOptionalProducts()!=null){
+
+        System.out.println("DEBUGGGG" + order.getOptionalProducts());
         for(OptionalProduct opp : order.getOptionalProducts()){
             list.add(opp.getId());
-        }}
+            System.out.println("DEBUGGGG" + opp.getId());
+        }
+    //}
 
        int orderID = 0;
         try {
