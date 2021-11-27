@@ -30,14 +30,7 @@ public class OrderService {
         List<OptionalProduct> optionalProducts = new ArrayList<>();
         OptionalProduct op = new OptionalProduct();
 
-        for (int prod_id : prod_ids) {
-            op= entityManager.find(OptionalProduct.class, prod_id);
-            if(op == null){
-                throw new MessageException("Optional product "+ prod_id + " is not avaiable!");
-            }
-            optionalProducts.add(op);
 
-        }
 
         User user = new User();
         user = entityManager.find(User.class,user_id);
@@ -54,7 +47,17 @@ public class OrderService {
 
         Order order = new Order();
         order.setaPackage(pack);
-        order.setOptionalProducts(optionalProducts);
+        if(prod_ids!= null) {
+            for (int prod_id : prod_ids) {
+                op = entityManager.find(OptionalProduct.class, prod_id);
+                if (op == null) {
+                    throw new MessageException("Optional product " + prod_id + " is not avaiable!");
+                }
+                optionalProducts.add(op);
+
+            }
+            order.setOptionalProducts(optionalProducts);
+        }
         order.setUser(user);
         order.setStart_subs(startSub);
         order.setValidity(validity);
@@ -115,6 +118,52 @@ public class OrderService {
 
         return query.getResultList();
 
+    }
+
+    public List<Order> getUserOrdersPayed (int user_id) throws MessageException {
+        User user =new User();
+        user = entityManager.find(User.class,user_id);
+        if (user == null)
+        {
+            throw new MessageException("User "+ user_id + " not found!");
+        }
+
+        Integer param1=1;
+        Query query = entityManager.createQuery("select o from Order o, User u  where o.user=u and o.status=?1 and u.id = ?2 ");
+        query.setParameter(1,param1);
+        query.setParameter(2,user_id);
+
+        return query.getResultList();
+
+    }
+
+    public List<Order> getUserOrdersRejected (int user_id) throws MessageException {
+        User user =new User();
+        user = entityManager.find(User.class,user_id);
+        if (user == null)
+        {
+            throw new MessageException("User "+ user_id + " not found!");
+        }
+
+        Integer param1=1;
+        Query query = entityManager.createQuery("select o from Order o, User u  where o.user=u and o.status>?1 and u.id = ?2 ");
+        query.setParameter(1,param1);
+        query.setParameter(2,user_id);
+
+        return query.getResultList();
+
+    }
+
+
+    public Order getOrder(int id) throws MessageException {
+        Order o = new Order();
+       o = entityManager.find(Order.class,id);
+        if(o==null){
+            throw new MessageException("order" + id + " Does not exist");
+        }
+        else{
+            return o;
+        }
     }
 
 }

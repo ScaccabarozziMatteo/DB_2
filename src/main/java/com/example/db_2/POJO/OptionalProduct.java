@@ -18,6 +18,10 @@ public class OptionalProduct {
     public OptionalProduct() {
     }
 
+    public OptionalProduct(int id) {
+        this.id = id;
+    }
+
     public int getId() {
         return id;
     }

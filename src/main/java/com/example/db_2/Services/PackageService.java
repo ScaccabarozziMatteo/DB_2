@@ -29,13 +29,6 @@ public class PackageService {
         List<OptionalProduct> optionalProducts = new ArrayList<>();
         OptionalProduct op = new OptionalProduct();
 
-        for (int prod_id : prods_id) {
-            op= entityManager.find(OptionalProduct.class, prod_id);
-            if(op == null){
-                throw new MessageException("Optional product "+ prod_id + " is not avaiable!");
-            }
-            optionalProducts.add(op);
-        }
 
         List<com.example.db_2.POJO.Service> services = new ArrayList<>();
         com.example.db_2.POJO.Service sv = new com.example.db_2.POJO.Service();
@@ -58,7 +51,16 @@ public class PackageService {
 
         Package aPackage = new Package();
         aPackage.setServices(services);
-        aPackage.setOptionalProducts(optionalProducts);
+        if(prods_id!=null) {
+            for (int prod_id : prods_id) {
+                op = entityManager.find(OptionalProduct.class, prod_id);
+                if (op == null) {
+                    throw new MessageException("Optional product " + prod_id + " is not avaiable!");
+                }
+                optionalProducts.add(op);
+            }
+            aPackage.setOptionalProducts(optionalProducts);
+        }
         aPackage.setEmployee(employee);
         aPackage.setFee12(fee12);
         aPackage.setFee24(fee24);

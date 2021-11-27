@@ -42,6 +42,44 @@ public class OrderController {
         return orders;
     }
 
+    @GetMapping(value = "/getpayed")
+    public List<Order> getAllforUserPayed (@RequestParam int user_id, HttpServletResponse response) throws IOException {
+        List<Order> orders = new ArrayList<>();
+        try {
+            orders = OS.getUserOrdersPayed(user_id);
+        } catch (MessageException e) {
+            //e.printStackTrace();
+            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Impossible to retrive orders for user" + user_id + ": " + e.getMessage());
+        }
+        return orders;
+    }
+
+    @GetMapping(value = "/getrejected")
+    public List<Order> getAllforUserRejected (@RequestParam int user_id, HttpServletResponse response) throws IOException {
+        List<Order> orders = new ArrayList<>();
+        try {
+            orders = OS.getUserOrdersRejected(user_id);
+        } catch (MessageException e) {
+            //e.printStackTrace();
+            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Impossible to retrive orders for user" + user_id + ": " + e.getMessage());
+        }
+        return orders;
+    }
+
+    @GetMapping(value="/getorder")
+    public Order getOrder(@RequestParam int id, HttpServletResponse response) throws IOException {
+        Order o =new Order();
+        try {
+            o = OS.getOrder(id);
+        } catch (MessageException e) {
+            //e.printStackTrace();
+            response.sendError(HttpServletResponse.SC_NOT_FOUND,e.getMessage());
+        }
+        return o;
+    }
+
+
+
     @PutMapping(value = "/simulatePayment/{order_id}")
     public int paymentSimulation(@PathVariable Integer order_id,HttpServletResponse response) throws IOException {
         Random rand = new Random();
@@ -79,9 +117,10 @@ public class OrderController {
 
 
         List<Integer> list = new ArrayList<>();
+        if(order.getOptionalProducts()!=null){
         for(OptionalProduct opp : order.getOptionalProducts()){
             list.add(opp.getId());
-        }
+        }}
 
        int orderID = 0;
         try {

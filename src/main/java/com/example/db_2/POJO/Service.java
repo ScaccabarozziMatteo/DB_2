@@ -7,7 +7,7 @@ import javax.persistence.*;
 public class Service {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_service")
     private Integer id;
 

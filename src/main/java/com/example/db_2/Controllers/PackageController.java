@@ -39,8 +39,11 @@ public class PackageController {
         for(Service aService : aPackage.getServices()){
             services_id.add(aService.getId()) ;
         }
-        for(OptionalProduct opp : aPackage.getOptionalProducts()){
-            prods_id.add(opp.getId());
+
+        if(aPackage.getOptionalProducts()!=null) {
+            for (OptionalProduct opp : aPackage.getOptionalProducts()) {
+                prods_id.add(opp.getId());
+            }
         }
 
         try {
