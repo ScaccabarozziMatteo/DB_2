@@ -21,4 +21,9 @@ public class OptionalProductService {
         return query.getResultList();
     }
 
+    public int create(OptionalProduct optionalProduct){
+        entityManager.persist(optionalProduct);
+        entityManager.flush();
+        return optionalProduct.getId();
+    }
 }
