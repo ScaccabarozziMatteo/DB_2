@@ -20,17 +20,37 @@ public class ServiceService {
 
     public int createNew(com.example.db_2.POJO.Service service) throws MessageException {
         List<com.example.db_2.POJO.Service> s=new ArrayList();
-        Query query = entityManager.createQuery("select s from Service s where s.type=?1 and s.internet=?2 and s.internet_fee=?3 and s.minutes=?4 and s.minutes_fee=?5 and s.sms=?6 and s.sms_fee=?7" );
-        query.setParameter(1,service.getType());
-        query.setParameter(2,service.getInternet());
-        query.setParameter(3,service.getInternet_fee());
-        query.setParameter(4,service.getMinutes());
-        query.setParameter(5,service.getMinutes_fee());
-        query.setParameter(6,service.getSms());
-        query.setParameter(7,service.getSms_fee());
-        System.out.println(query);
+    Integer minutes=null, sms, internet;
+    Float minutes_fee,sms_fee, internet_fee;
+        internet=service.getInternet();
+        internet_fee = service.getInternet_fee();
+        minutes =service.getMinutes();
+        minutes_fee=service.getMinutes_fee();
+        sms =service.getSms();
+        sms_fee=service.getSms_fee();
+        Query query=entityManager.createQuery("select s from Service s");
+        switch (service.getType()) {
+            case ("fixed internet"):
+            case ("mobile internet"):
+                query = entityManager.createQuery("select s from Service s where (s.type=?1 and s.internet=?2 and s.internet_fee=?3 and s.minutes is null and s.minutes_fee is null and s.sms is null and s.sms_fee is null)" );
+                query.setParameter(1,service.getType());
+                query.setParameter(2,internet);
+                query.setParameter(3,internet_fee);
+                break;
+            case ("mobile phone"):
+                query = entityManager.createQuery("select s from Service s where (s.type=?1 and s.internet is null and s.internet_fee is null and s.minutes=?2 and s.minutes_fee=?3 and s.sms=?4 and s.sms_fee=?5)" );
+                query.setParameter(1,service.getType());
+                query.setParameter(2,minutes);
+                query.setParameter(3,minutes_fee);
+                query.setParameter(4,sms);
+                query.setParameter(5,sms_fee);
+                break;
+            case ("fixed phone"):
+                query = entityManager.createQuery("select s from Service s where (s.type=?1 )" );
+                query.setParameter(1,service.getType());
+                break;
+        }
         s= query.getResultList();
-        System.out.println(query.getResultList());
         if(!s.isEmpty())
             throw new MessageException("service already exists!!");
 

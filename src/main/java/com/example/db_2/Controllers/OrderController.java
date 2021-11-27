@@ -66,6 +66,18 @@ public class OrderController {
         return orders;
     }
 
+    @GetMapping(value = "/getcart")
+    public List<Order> getAllforUserCart (@RequestParam int user_id, HttpServletResponse response) throws IOException {
+        List<Order> orders = new ArrayList<>();
+        try {
+            orders = OS.getUserOrdersCart(user_id);
+        } catch (MessageException e) {
+            //e.printStackTrace();
+            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Impossible to retrive orders for user" + user_id + ": " + e.getMessage());
+        }
+        return orders;
+    }
+
     @GetMapping(value="/getorder")
     public Order getOrder(@RequestParam int id, HttpServletResponse response) throws IOException {
         Order o =new Order();

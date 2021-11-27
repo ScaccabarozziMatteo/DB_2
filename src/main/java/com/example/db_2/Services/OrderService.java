@@ -155,6 +155,24 @@ public class OrderService {
     }
 
 
+    public List<Order> getUserOrdersCart (int user_id) throws MessageException {
+        User user =new User();
+        user = entityManager.find(User.class,user_id);
+        if (user == null)
+        {
+            throw new MessageException("User "+ user_id + " not found!");
+        }
+
+        Integer param1=0;
+        Query query = entityManager.createQuery("select o from Order o, User u  where o.user=u and o.status=?1 and u.id = ?2 ");
+        query.setParameter(1,param1);
+        query.setParameter(2,user_id);
+
+        return query.getResultList();
+
+    }
+
+
     public Order getOrder(int id) throws MessageException {
         Order o = new Order();
        o = entityManager.find(Order.class,id);

@@ -27,6 +27,7 @@ public class User {
     private String password;
     private boolean insolvent;
 
+    /*
     @ManyToMany
     @JoinTable(name= "products_queues",
     joinColumns = @JoinColumn(name = "user_id"),
@@ -37,7 +38,7 @@ public class User {
     @JoinTable(name= "services_queues",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "service"))
-    private List<Service> service_queues;
+    private List<Service> service_queues;*/
 
     @OneToMany(mappedBy = "user")
     private List<Order> orders;
@@ -56,7 +57,7 @@ public class User {
     public void setOrders(List<Order> orders) {
         this.orders = orders;
     }
-
+/*
     public List<com.example.db_2.POJO.OptionalProduct> getProduct_queue() {
         return product_queue;
     }
@@ -71,7 +72,7 @@ public class User {
 
     public void setService_queues(List<com.example.db_2.POJO.Service> service_queues) {
         this.service_queues = service_queues;
-    }
+    }*/
 
     public int getId() {
         return id;
