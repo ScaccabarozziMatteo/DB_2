@@ -21,6 +21,13 @@ public class ServiceController {
         this.serviceService=ss;
     }
 
+
+    @GetMapping(value = "/getall")
+    public List<Service> getAllServices()
+    {
+        return serviceService.findAllServices();
+    }
+
     @PostMapping(value = "/create")
     public int createNew(@RequestBody Service service, HttpServletResponse response) throws IOException {
         int r=-1;

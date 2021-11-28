@@ -8,7 +8,7 @@ import javax.persistence.*;
 public class OptionalProduct {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_opt_prod")
     private int id;
 

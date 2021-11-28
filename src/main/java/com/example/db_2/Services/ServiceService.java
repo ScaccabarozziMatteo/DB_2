@@ -18,6 +18,11 @@ public class ServiceService {
     private EntityManager entityManager;
 
 
+    public List<com.example.db_2.POJO.Service> findAllServices(){
+        Query query = entityManager.createQuery("select s from Service s" );
+        return query.getResultList();
+    }
+
     public int createNew(com.example.db_2.POJO.Service service) throws MessageException {
         List<com.example.db_2.POJO.Service> s=new ArrayList();
     Integer minutes=null, sms, internet;

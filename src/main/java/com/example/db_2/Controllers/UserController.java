@@ -64,6 +64,17 @@ public class UserController {
         return orders;
     }
 
+@GetMapping(value = "/getinsolvent")
+    public Integer getInsolvent(@RequestParam int user_id,HttpServletResponse response) throws IOException {
+        Integer i =null;
 
+    try {
+        i=US.getInsolvent(user_id);
+    } catch (MessageException e) {
+        //e.printStackTrace();
+        response.sendError(HttpServletResponse.SC_UNAUTHORIZED,e.getMessage());
+    }
+    return i;
+}
 
 }

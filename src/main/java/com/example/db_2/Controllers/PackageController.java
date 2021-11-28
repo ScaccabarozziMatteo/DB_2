@@ -60,7 +60,8 @@ public class PackageController {
         List<Integer> prods_id = new ArrayList<>();
 
         for(Service aService : aPackage.getServices()){
-            services_id.add(aService.getId()) ;
+           if(aService!=null)
+               services_id.add(aService.getId()) ;
         }
 
         if(aPackage.getOptionalProducts()!=null) {
@@ -70,6 +71,7 @@ public class PackageController {
         }
 
         try {
+            System.out.println(aPackage.getFee12());
             i= PS.createPackage(aPackage.getName(), aPackage.getFee12(), aPackage.getFee24(), aPackage.getFee36(),aPackage.getEmployee().getId(), services_id, prods_id);
         } catch (MessageException e) {
             //e.printStackTrace();

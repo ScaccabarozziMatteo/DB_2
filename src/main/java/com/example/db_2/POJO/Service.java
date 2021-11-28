@@ -23,6 +23,10 @@ public class Service {
     public Service() {
     }
 
+    public Service(Integer id) {
+        this.id = id;
+    }
+
     public Integer getId() {
         return id;
     }

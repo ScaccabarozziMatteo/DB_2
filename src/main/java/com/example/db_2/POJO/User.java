@@ -25,7 +25,7 @@ public class User {
     private String username;
     @Column(nullable = false)
     private String password;
-    private boolean insolvent;
+    private int insolvent;
 
     /*
     @ManyToMany
@@ -106,11 +106,11 @@ public class User {
         this.password = password;
     }
 
-    public boolean isInsolvent() {
+    public int getInsolvent() {
         return insolvent;
     }
 
-    public void setInsolvent(boolean insolvent) {
+    public void setInsolvent(int insolvent) {
         this.insolvent = insolvent;
     }
 

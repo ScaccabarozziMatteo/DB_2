@@ -68,13 +68,22 @@ public class UserService {
             throw new MessageException("User "+ user_id + " not found!");
         }
 
-        Query query = entityManager.createQuery("select o from Order o, User u  where o.user=u and u.id = ?1 ");
+        Query query = entityManager.createQuery("select o from Order o, User u  where o.user=u and u.id = ?1 ",Order.class);
 
         query.setParameter(1,user_id);
 
         return query.getResultList();
 
     }
+
+public Integer getInsolvent(int user_id) throws MessageException {
+       User u = entityManager.find(User.class,user_id);
+       if (u==null)
+           throw new MessageException("user not found");
+       Query query = entityManager.createQuery("select u.insolvent from User u where u.id=?1",Integer.class);
+       query.setParameter(1,user_id);
+       return (Integer) query.getSingleResult();
+}
 
 
 }
