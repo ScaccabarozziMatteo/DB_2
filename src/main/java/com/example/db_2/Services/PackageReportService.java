@@ -23,7 +23,7 @@ public class PackageReportService {
         Package_Report pr = new Package_Report();
         pr = entityManager.createNamedQuery("findByPackage",Package_Report.class).setParameter(1,PackageID).getSingleResult();
         if (pr==null){
-            throw new MessageException("No info about Package "+ PackageID + "are avaiable.");
+            throw new MessageException("No info about Package "+ PackageID + "are available.");
         }
         return pr;
     }
