@@ -77,4 +77,9 @@ public class UserController {
     return i;
 }
 
+@GetMapping(value = "/getAllUserInsolvents")
+    public List<User> getAllInsolvents() {
+        return US.getAllInsolvents();
+    }
+
 }
