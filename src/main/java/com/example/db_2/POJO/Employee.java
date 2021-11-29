@@ -7,7 +7,6 @@ import java.util.List;
 
 @Entity
 @Table(name = "Employees", schema = "db_2")
-@NamedQuery(name="Employee.findAll", query="SELECT e FROM Employee e")
 @NamedQuery(name = "Employee.checkCredentials", query = "SELECT r FROM Employee r  WHERE r.email = ?1 and r.password = ?2")
 @NamedQuery(name = "Employee.findByEmail", query="SELECT e FROM Employee e WHERE e.email = ?1")
 public class Employee {
