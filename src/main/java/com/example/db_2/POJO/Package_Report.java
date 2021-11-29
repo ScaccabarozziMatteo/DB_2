@@ -4,8 +4,8 @@ import javax.persistence.*;
 
 @Entity
 @Table(name="package_reports")
-@NamedQuery(name = "Employee.findAll", query="SELECT p FROM Package_Report p")
-@NamedQuery(name = "Employee.findByPackage", query="SELECT p FROM Package_Report p where p.aPackage=?1")
+@NamedQuery(name = "findAll", query="SELECT p FROM Package_Report p")
+@NamedQuery(name = "findByPackage", query="SELECT p FROM Package_Report p where p.aPackage=?1")
 public class Package_Report {
 
     @Id
@@ -18,6 +18,15 @@ public class Package_Report {
     float total_revenue;
     float total_revenue_prod;
     int total_prod;
+    float avg_prod;
+
+    public float getAvg_prod() {
+        return avg_prod;
+    }
+
+    public void setAvg_prod(float avg_prod) {
+        this.avg_prod = avg_prod;
+    }
 
     public Package_Report() {
     }
