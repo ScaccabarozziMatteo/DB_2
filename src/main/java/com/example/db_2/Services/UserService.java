@@ -14,16 +14,16 @@ public class UserService {
     @PersistenceContext
     private EntityManager entityManager;
 
-    public User findUserByEmail(String email){
-        return entityManager.createNamedQuery("User.findByEmail",User.class).setParameter(1,email).getSingleResult();
+    public User findUserByEmail(String email) {
+        return entityManager.createNamedQuery("User.findByEmail", User.class).setParameter(1, email).getSingleResult();
     }
 
-    public boolean isEmailPresent(String email){
-        Query query = entityManager.createQuery( "select count (u) from User u where u.email =?1");
+    public boolean isEmailPresent(String email) {
+        Query query = entityManager.createQuery("select count (u) from User u where u.email =?1");
 
-        query.setParameter(1,email);
+        query.setParameter(1, email);
         Long i = (Long) query.getSingleResult();
-        return ((i.equals(0L))? false:true);
+        return ((i.equals(0L)) ? false : true);
     }
 
     public User checkCredentials(String email, String pwd) throws NonUniqueResultException, MessageException {
@@ -42,48 +42,52 @@ public class UserService {
 
     }
 
-    public int createUser(String email, String username, String password) throws MessageException{
-        if(isEmailPresent(email)){
+    public int createUser(String email, String username, String password) throws MessageException {
+        if (isEmailPresent(email)) {
             throw new MessageException("This email is already registered!");
         }
 
-        if(email.equals("")|| username.equals("") || password.equals("") ||email.isEmpty()|| username.isEmpty() || password.isEmpty() || email.length() > 31 || password.length() > 61){
+        if (email.equals("") || username.equals("") || password.equals("") || email.isEmpty() || username.isEmpty() || password.isEmpty() || email.length() > 31 || password.length() > 61) {
             throw new MessageException("Can't register empty strings, insert valid credentials");
         }
 
-        User u= new User();
+        User u = new User();
         u.setEmail(email);
         u.setUsername(username);
         u.setPassword(password);
         entityManager.persist(u);
         entityManager.flush();
-       return u.getId();
+        return u.getId();
     }
 
-    public List<Order> getUserOrders (int user_id) throws MessageException {
-        User user =new User();
-        user = entityManager.find(User.class,user_id);
-        if (user == null)
-        {
-            throw new MessageException("User "+ user_id + " not found!");
+    public List<Order> getUserOrders(int user_id) throws MessageException {
+        User user = new User();
+        user = entityManager.find(User.class, user_id);
+        if (user == null) {
+            throw new MessageException("User " + user_id + " not found!");
         }
 
-        Query query = entityManager.createQuery("select o from Order o, User u  where o.user=u and u.id = ?1 ",Order.class);
+        Query query = entityManager.createQuery("select o from Order o, User u  where o.user=u and u.id = ?1 ", Order.class);
 
-        query.setParameter(1,user_id);
+        query.setParameter(1, user_id);
 
         return query.getResultList();
 
     }
 
-public Integer getInsolvent(int user_id) throws MessageException {
-       User u = entityManager.find(User.class,user_id);
-       if (u==null)
-           throw new MessageException("user not found");
-       Query query = entityManager.createQuery("select u.insolvent from User u where u.id=?1",Integer.class);
-       query.setParameter(1,user_id);
-       return (Integer) query.getSingleResult();
-}
+    public Integer getInsolvent(int user_id) throws MessageException {
+        User u = entityManager.find(User.class, user_id);
+        if (u == null)
+            throw new MessageException("user not found");
+        Query query = entityManager.createQuery("select u.insolvent from User u where u.id=?1", Integer.class);
+        query.setParameter(1, user_id);
+        return (Integer) query.getSingleResult();
+    }
+
+    public List<User> getAllInsolvents() {
+        Query query = entityManager.createQuery("SELECT u.email, u.username FROM User u WHERE u.insolvent = 1" );
+        return query.getResultList();
+    }
 
 
 }
