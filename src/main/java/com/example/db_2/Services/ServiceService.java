@@ -19,8 +19,8 @@ public class ServiceService {
 
     public int createNew(com.example.db_2.POJO.Service service) throws MessageException {
         List<com.example.db_2.POJO.Service> s=new ArrayList();
-    Integer minutes=null, sms, internet;
-    Float minutes_fee,sms_fee, internet_fee;
+         Integer minutes, sms, internet;
+         Float minutes_fee,sms_fee, internet_fee;
         internet=service.getInternet();
         internet_fee = service.getInternet_fee();
         minutes =service.getMinutes();

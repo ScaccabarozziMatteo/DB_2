@@ -29,6 +29,13 @@ public class PackageService {
     public int createPackage2(Package aPackage,List<Integer> prods_id) throws MessageException {
         OptionalProduct op =new OptionalProduct();
 
+        Query query = entityManager.createQuery("select p from Package p where p.name = ?1", Package.class);
+        query.setParameter(1,aPackage.getName());
+
+        if(!query.getResultList().isEmpty()){
+            throw new MessageException("Package " + aPackage.getName() + " alredy exists!");
+        }
+
         if(prods_id!=null) {
             for (int prod_id : prods_id) {
                 op = entityManager.find(OptionalProduct.class, prod_id);
@@ -82,6 +89,7 @@ public class PackageService {
             }
             aPackage.setOptionalProducts(optionalProducts);
         }
+
         aPackage.setEmployee(employee);
         aPackage.setFee12(fee12);
         aPackage.setFee24(fee24);

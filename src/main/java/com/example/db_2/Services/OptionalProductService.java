@@ -21,7 +21,16 @@ public class OptionalProductService {
         return query.getResultList();
     }
 
-    public int create(OptionalProduct optionalProduct){
+    public int create(OptionalProduct optionalProduct) throws MessageException {
+
+        Query query = entityManager.createQuery("select op from OptionalProduct op where op.name=?1 and op.monthly_fee=?2", OptionalProduct.class);
+        query.setParameter(1,optionalProduct.getName());
+        query.setParameter(2,optionalProduct.getMonthly_fee());
+
+        if(!query.getResultList().isEmpty()){
+            throw new MessageException("Optional product " + optionalProduct.getName() + " already exists ! ");
+        }
+
         entityManager.persist(optionalProduct);
         entityManager.flush();
         return optionalProduct.getId();

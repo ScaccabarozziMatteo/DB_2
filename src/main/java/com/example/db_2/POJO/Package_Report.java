@@ -10,22 +10,20 @@ public class Package_Report {
 
     @Id
     @Column(name="package")
-    int aPackage;
-    int total_purchase;
-    int purchase_24;
-    int purchase_24_36;
-    int purchase_36;
-    float total_revenue;
-    float total_revenue_prod;
-    int total_prod;
-    float avg_prod;
+    private int aPackage;
+    private int total_purchase;
+    private int purchase_24;
+    private int purchase_24_36;
+    private int purchase_36;
+    private float total_revenue;
+    private float total_revenue_prod;
+    private int total_prod;
+
+    @Transient
+    private float avg_prod;
 
     public float getAvg_prod() {
-        return avg_prod;
-    }
-
-    public void setAvg_prod(float avg_prod) {
-        this.avg_prod = avg_prod;
+        return (float)total_prod/(float)total_purchase;
     }
 
     public Package_Report() {
@@ -95,7 +93,4 @@ public class Package_Report {
         this.total_prod = total_prod;
     }
 
-    public float getAvgProd(){
-        return (float)total_prod/(float)total_purchase;
-    }
 }
