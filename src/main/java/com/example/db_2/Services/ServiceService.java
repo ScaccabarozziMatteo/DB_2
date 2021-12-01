@@ -50,8 +50,11 @@ public class ServiceService {
                 break;
         }
         s= query.getResultList();
-        if(!s.isEmpty())
+        if(!s.isEmpty()){
+            System.out.println("okokokokoko");
             throw new MessageException("Service already exists!!");
+
+        }
 
         entityManager.persist(service);
         entityManager.flush();

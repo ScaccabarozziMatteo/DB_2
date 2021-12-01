@@ -55,7 +55,7 @@ public class PackageController {
 
     @PostMapping(value = "/create")
     public int createPackage(HttpServletResponse response,@RequestBody Package aPackage) throws IOException {
-        Integer i=null;
+        int i=-1;
         List<Integer> services_id = new ArrayList<>();
         List<Integer> prods_id = new ArrayList<>();
 
@@ -69,13 +69,14 @@ public class PackageController {
                 prods_id.add(opp.getId());
             }
         }
+        //System.out.println(aPackage.getEmployee().getId());
 
         try {
             System.out.println(aPackage.getFee12());
             i= PS.createPackage(aPackage.getName(), aPackage.getFee12(), aPackage.getFee24(), aPackage.getFee36(),aPackage.getEmployee().getId(), services_id, prods_id);
         } catch (MessageException e) {
             //e.printStackTrace();
-            response.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED,e.getMessage());
+            response.sendError(HttpServletResponse.SC_CONFLICT,e.getMessage());
         }
 
         return i;
