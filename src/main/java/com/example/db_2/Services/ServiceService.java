@@ -27,14 +27,16 @@ public class ServiceService {
         minutes_fee=service.getMinutes_fee();
         sms =service.getSms();
         sms_fee=service.getSms_fee();
+        System.out.println(sms );
         Query query=entityManager.createQuery("select s from Service s");
         switch (service.getType()) {
             case ("fixed internet"):
             case ("mobile internet"):
-                query = entityManager.createQuery("select s from Service s where (s.type=?1 and s.internet=?2 and s.internet_fee=?3 and s.minutes is null and s.minutes_fee is null and s.sms is null and s.sms_fee is null)" );
+                query = entityManager.createQuery("select s from Service s where (s.type=?1 and s.internet=?2 and s.internet_fee=?3 and s.minutes is null and s.minutes_fee is null and s.sms is null and s.sms_fee is null)");
                 query.setParameter(1,service.getType());
                 query.setParameter(2,internet);
                 query.setParameter(3,internet_fee);
+                System.out.println(query);
                 break;
             case ("mobile phone"):
                 query = entityManager.createQuery("select s from Service s where (s.type=?1 and s.internet is null and s.internet_fee is null and s.minutes=?2 and s.minutes_fee=?3 and s.sms=?4 and s.sms_fee=?5)" );
@@ -51,7 +53,6 @@ public class ServiceService {
         }
         s= query.getResultList();
         if(!s.isEmpty()){
-            System.out.println("okokokokoko");
             throw new MessageException("Service already exists!!");
 
         }
