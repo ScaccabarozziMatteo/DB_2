@@ -15,6 +15,10 @@ public class ProductReportService {
     @PersistenceContext
     private EntityManager entityManager;
 
+    public List<ProductReport> getBestValue(){
+        return  entityManager.createNamedQuery("Product.getBest", ProductReport.class).getResultList();
+    }
+
     public List<ProductReport> getAll(){
         return entityManager.createQuery("select pr from ProductReport pr").getResultList();
     }

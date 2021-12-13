@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import javax.persistence.Entity;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.transaction.Transactional;
 import java.util.List;
 
@@ -16,7 +17,8 @@ public class AuditingTableService {
     private EntityManager entityManager;
 
     public List<auditingTable> getAuditingTable(){
-        return entityManager.createQuery("select a from auditingTable a").getResultList();
+        Query query = entityManager.createQuery("select o from auditingTable o" );
+        return query.getResultList();
     }
 
 

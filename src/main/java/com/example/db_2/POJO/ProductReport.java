@@ -2,10 +2,12 @@ package com.example.db_2.POJO;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "products_sales")
+@Table(name = "product_sales")
+@NamedQuery(name = "Product.getBest", query = "SELECT p FROM ProductReport p where p.total_sales=(select MAX (p1.total_sales) from  ProductReport p1)")
 public class ProductReport {
     @Id
     private int optional_product;

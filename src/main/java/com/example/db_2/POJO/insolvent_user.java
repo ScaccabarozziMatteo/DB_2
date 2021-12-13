@@ -1,16 +1,14 @@
 package com.example.db_2.POJO;
 
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name="insolvent_users")
 @NamedQuery(name = "InsolventfindAll", query="SELECT i FROM insolvent_user i")
 public class insolvent_user {
     @Id
+    @Column(name = "idinsolvent_users")
     private int insolvent_user;
     private String email;
     private String username;

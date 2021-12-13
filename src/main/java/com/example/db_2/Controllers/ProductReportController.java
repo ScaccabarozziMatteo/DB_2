@@ -6,10 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping(value = "/productreport")
 public class ProductReportController {
 
@@ -19,6 +20,11 @@ public class ProductReportController {
     public  ProductReportController(ProductReportService prr){
         this.PR = prr;
     }
+
+   @GetMapping(value = "/getBest")
+   public List<ProductReport> getBest(){
+       return PR.getBestValue();
+   }
 
     @GetMapping(value = "/getAll")
     public List<ProductReport> getAll(){

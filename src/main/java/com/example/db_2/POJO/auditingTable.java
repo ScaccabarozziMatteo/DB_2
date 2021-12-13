@@ -1,5 +1,6 @@
 package com.example.db_2.POJO;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -10,6 +11,7 @@ import java.time.LocalDateTime;
 public class auditingTable {
 
     @Id
+    @Column(name = "user_id")
     private int user_id;
     private String username;
     private float amount;
